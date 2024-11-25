@@ -2,11 +2,10 @@ package com.example.users.service;
 
 import com.example.users.dto.CreateUserDto;
 import com.example.users.dto.UpdateUserDto;
-import com.example.users.exception.UserNotFoundException;
 import com.example.users.model.User;
 import com.example.users.repository.UserRepository;
-
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -22,8 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Integer id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override

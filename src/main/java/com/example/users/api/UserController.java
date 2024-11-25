@@ -53,14 +53,14 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content)
     })
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(
-            @Parameter(description = "User ID to be fetched", required = true, example = "1")
-            @PathVariable Integer id) {
+        @GetMapping("/{id}")
+        public ResponseEntity<User> getUser(
+                @Parameter(description = "User ID to be fetched", required = true, example = "1")
+                @PathVariable Integer id) {
         Optional<User> userOpt = Optional.ofNullable(userService.getUserById(id));
-        return userOpt.map(user -> new ResponseEntity<>(user, HttpStatus.OK))
-                .orElseThrow(() -> new com.example.users.exception.UserNotFoundException(id));
-    }
+        return userOpt.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        }
+
 
 
     @Operation(summary = "Create a new user", description = "Adds a new user to the system.")

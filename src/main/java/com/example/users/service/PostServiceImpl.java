@@ -2,8 +2,6 @@ package com.example.users.service;
 
 import com.example.users.dto.CreatePostDto;
 import com.example.users.dto.UpdatePostDto;
-import com.example.users.exception.PostNotFoundException;
-import com.example.users.exception.UserNotFoundException;
 import com.example.users.model.Post;
 import com.example.users.model.User;
 import com.example.users.repository.PostRepository;
@@ -26,8 +24,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post createPost(Integer userId, CreatePostDto createPostDto) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+        User user = userRepository.findById(userId).orElse(null);
         Post post = new Post();
         post.setTitle(createPostDto.title());
         post.setContent(createPostDto.content());
@@ -35,23 +32,19 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(post);
     }
 
+
     @Override
     public List<Post> getPostsByUserId(Integer userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new UserNotFoundException(userId);
-        }
         return postRepository.findByUserId(userId);
     }
 
     @Override
     public Post getPostById(Integer userId, Integer postId) {
-        if (!userRepository.existsById(userId)) {
-            throw new UserNotFoundException(userId);
-        }
         return postRepository.findById(postId)
                 .filter(post -> post.getUser().getId().equals(userId))
-                .orElseThrow(() -> new PostNotFoundException(postId));
+                .orElse(null);
     }
+
 
     @Override
     public Post updatePost(Integer userId, Integer postId, UpdatePostDto updatePostDto) {

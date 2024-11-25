@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>users</artifactId>
+	<artifactId>user</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>users</name>
+	<name>user</name>
 	<description>Sprint Boot Project</description>
 	<url/>
 	<licenses>
