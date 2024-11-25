@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/usersdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=bione10
+    depends_on:
+      - db
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=usersdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=bione10
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
